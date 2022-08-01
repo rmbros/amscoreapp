@@ -5,3 +5,5 @@
 /AmsApp/obj
 /AmsApp/bin/Debug/net6.0
 /AmsApp/.vs
+/.vs
+/AmsApp/bin/Release/net6.0

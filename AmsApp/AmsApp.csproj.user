@@ -5,5 +5,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>IIS</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Administrator\source\repos\amscoreapp\AmsApp\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>
