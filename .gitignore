@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/AmsApp/obj
+/AmsApp/bin/Debug/net6.0
+/AmsApp/.vs
