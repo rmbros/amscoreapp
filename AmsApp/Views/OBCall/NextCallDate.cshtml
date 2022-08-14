@@ -1,0 +1,13 @@
+﻿@model List<AmsApp.Dto.CallDto>
+
+
+<ul class="list-group list-group-flush">
+    @foreach (var item in Model)
+    {
+
+        <li class="list-group-item"><strong>@item.MaskedMobile</strong><a id="btnCall" data="@item.Id" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-phone"></i></span></a></li>
+    }
+</ul>
+@section Scripts{
+    <script src="~/Views/OBCall/Index.cshtml.js"></script>
+}

@@ -1,0 +1,23 @@
+﻿@model AmsApp.Models.OBLead
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-header border-0 pb-0">
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 p-5 text-center">
+                     <h3> <label asp-for="MaskedMobile"> <b>@Model.MaskedMobile</b></label></h3>
+                </div>
+                 <div class="col-md-12 pl-5 pr-5 pb-5">
+                    <a id="btnCall" data="@Model.Id" class="btn btn-rounded btn-primary btn-lg btn-block" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-phone"></i></span><strong>CALL</strong></a>
+                </div>
+              @*  <div class="col-md-12 pl-5 pr-5">
+                   <a id="btnCall" class="btn btn-rounded btn-warning btn-lg btn-block" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-refresh"></i></span><strong>RELOAD</strong></a>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Views/OBCall/Index.cshtml.js"></script>
+}

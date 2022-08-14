@@ -13,6 +13,12 @@ namespace AmsApp.Helpers
         {
             return Convert.ToInt32(controllerBase.User.Claims.First(c => c.Type.Equals(Helpers.Constants.Strings.AMSClaimIdentifiers.UserId)).Value);
         }
+
+        public static int GetEmployeeId(this ControllerBase controllerBase)
+        {
+            return Convert.ToInt32(controllerBase.User.Claims.First(c => c.Type.Equals(Helpers.Constants.Strings.AMSClaimIdentifiers.EmployeeId)).Value);
+        }
+
         public static string GetClaim(this ControllerBase controllerBase, string claimName)
         {   
             return controllerBase.User.Claims.First(c => c.Type.Equals(claimName)).Value;

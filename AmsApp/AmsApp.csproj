@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\OB\" />
-    <Folder Include="Models\OB\" />
     <Folder Include="Service\" />
   </ItemGroup>
 

@@ -253,7 +253,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   box-sizing: border-box; }
 
 html {
-    zoom: 75%;
+    zoom: 100%;
     font-family: sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;

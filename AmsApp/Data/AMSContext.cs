@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-//using AmsApp.Dto;
+using AmsApp.Dto;
 using AmsApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -34,6 +34,10 @@ namespace AmsApp.Data
 
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<VwEmployees> VwEmployees { get; set; }
+        public virtual DbSet<CCDisposition> CCDispositions { get; set; } = null!;
+        public virtual DbSet<OBCallHistory> OBCallHistories { get; set; } = null!;
+        public virtual DbSet<OBLead> OBLeads { get; set; } = null!;
+        public virtual DbSet<LeadCountDto> LeadCountDtos { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -152,6 +156,99 @@ namespace AmsApp.Data
                 entity.Property(e => e.WhatsApp)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CCDisposition>(entity =>
+            {
+                entity.ToTable("CCDispositions");
+
+                entity.Property(e => e.CanAssign).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasPrecision(0)
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.ModifiedOn).HasPrecision(0);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<OBCallHistory>(entity =>
+            {
+                entity.ToTable("OBCallHistory");
+
+                entity.Property(e => e.CallDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Disposition).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.NextCallDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<OBLead>(entity =>
+            {
+                entity.ToTable("OBLeads");
+
+                entity.HasIndex(e => e.Mobile, "OBLeads$Mobile")
+                    .IsUnique();
+
+                entity.Property(e => e.Address).HasMaxLength(1000);
+
+                entity.Property(e => e.AllocatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AltMobile).HasMaxLength(20);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.Country).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Disposition).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Dist).HasMaxLength(100);
+
+                entity.Property(e => e.Email).HasMaxLength(100);
+
+                entity.Property(e => e.LastCallOn).HasColumnType("datetime");
+
+                entity.Property(e => e.LastCalledBy).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Mobile).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.NextCallDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Notes).HasMaxLength(1000);
+
+                entity.Property(e => e.OBLeadUploadHistoryId).HasColumnName("OBLeadUploadHistoryId");
+
+                entity.Property(e => e.State).HasMaxLength(100);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
+            });
+
+            modelBuilder.Entity<LeadCountDto>(entity =>
+            {
+                entity.HasNoKey();
             });
 
             OnModelCreatingPartial(modelBuilder);
