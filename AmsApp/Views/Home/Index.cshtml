@@ -6,60 +6,51 @@
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-info">
         <div class="card-body p-4">
-            <div class="media">
-                <span class="mr-3">
-                    <i class="flaticon-381-database"></i>
-                </span>
-                <div class="media-body text-white text-right">
-                    <p class="mb-1">Total Leads</p>
-                    <h3 class="text-white">@Model.TotalLeads</h3>
+            <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="flaticon-381-database"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Leads</p>
+                        <h4 class="text-white">@Model.NewLeads.ToString("000")/@Model.TotalLeads.ToString("000")</h4>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-success">
-        <div class="card-body p-4">
-            <div class="media">
-                <span class="mr-3">
-                    <i class="flaticon-381-add-3"></i>
-                </span>
-                <div class="media-body text-white text-right">
-                    <p class="mb-1">New Leads</p>
-                    <h3 class="text-white">@Model.NewLeads</h3>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-danger">
         <div class="card-body  p-4">
-            <div class="media">
-                <span class="mr-3">
-                    <i class="flaticon-381-bookmark"></i>
-                </span>
-                <div class="media-body text-white text-right">
-                    <p class="mb-1">On Hold</p>
-                    <h3 class="text-white">@Model.OnHoldCount</h3>
+            <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="flaticon-381-bookmark"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">On Hold</p>
+                        <h4 class="text-white">@Model.OnHoldCount</h4>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-warning">
         <div class="card-body p-4">
-            <div class="media">
-                <span class="mr-3">
-                    <i class="flaticon-381-calendar-1"></i>
-                </span>
-                <div class="media-body text-white text-right">
-                    <p class="mb-1">Next Call Date</p>
-                    <h3 class="text-white">@Model.NextCallDateCount</h3>
+            <a asp-controller="OBCall" asp-action="NextCallDate" aria-expanded="false">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="flaticon-381-calendar-1"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Next Call Date</p>
+                        <h4 class="text-white">@Model.NextCallDateCount</h4>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@ namespace AmsApp.Dto
         public List<ListItem> Gender { get; set; } = new List<ListItem>();
         public List<ListItem> ClinicBranch { get; set; } = new List<ListItem>();
         public List<ListItem> MainDisease { get; set; } = new List<ListItem>();
-        public List<ListItemWithParent> SubDisease { get; set; } = new List<ListItemWithParent>();
+        public List<ListItemWithParent> SubDiseases { get; set; } = new List<ListItemWithParent>();
         public List<ListItem> City { get; set; } = new List<ListItem>();
         public List<ListItem> State { get; set; } = new List<ListItem>();
         public List<ListItem> Country { get; set; } = new List<ListItem>();

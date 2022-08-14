@@ -12,55 +12,97 @@
 function LoadData() {
     var data = JSON.parse(localStorage.getItem("lookupdata"));
     //Disposition
+    var hvDisposition = $('#hvDisposition').val();
     $.each(data.disposition, function (index, value) {
         $('#Disposition').append('<option value="' + value.id + '">' + value.title + '</option>');
+        //if (value.id == hvDisposition) {
+        //    $('#Disposition').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        //}
+        //else {
+        //    $('#Disposition').append('<option value="' + value.id + '">' + value.title + '</option>');
+        //}
     });
 
     //Clinic Branch
+    var hvClinicBranch = $('#hvClinicBranch').val();
     $.each(data.clinicBranch, function (index, value) {
-        $('#ClinicBranch').append('<option value="' + value.id + '">' + value.title + '</option>');
+        if (value.id == hvClinicBranch) {
+            $('#ClinicBranch').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        }
+        else {
+            $('#ClinicBranch').append('<option value="' + value.id + '">' + value.title + '</option>');
+        }
     });
+    $('#ClinicBranch').selectpicker('refresh');
 
     //Gender
+    var hvGender = $('#hvGender').val();
     $.each(data.gender, function (index, value) {
-        $('#Gender').append('<option value="' + value.id + '">' + value.title + '</option>');
+        if (value.id == hvGender) {
+            $('#Gender').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        }
+        else {
+            $('#Gender').append('<option value="' + value.id + '">' + value.title + '</option>');
+        }
     });
+    $('#Gender').selectpicker('refresh');
 
     //City
+    var hvCity = $('#hvCity').val();
     $.each(data.city, function (index, value) {
-        $('#City').append('<option value="' + value.id + '">' + value.title + '</option>');
+        if (value.id == hvCity) {
+            $('#City').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        }
+        else {
+            $('#City').append('<option value="' + value.id + '">' + value.title + '</option>');
+        }
     });
+    $('#City').selectpicker('refresh');
 
     //State
+    var hvState = $('#hvState').val();
     $.each(data.state, function (index, value) {
-        $('#State').append('<option value="' + value.id + '">' + value.title + '</option>');
+        if (value.id == hvState) {
+            $('#State').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        }
+        else {
+            $('#State').append('<option value="' + value.id + '">' + value.title + '</option>');
+        }
     });
+    $('#State').selectpicker('refresh');
 
     //Country
+    var hvCountry = $('#hvCountry').val();
     $.each(data.country, function (index, value) {
-        $('#Country').append('<option value="' + value.id + '">' + value.title + '</option>');
+        if (value.id == hvCountry) {
+            $('#Country').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        }
+        else {
+            $('#Country').append('<option value="' + value.id + '">' + value.title + '</option>');
+        }
     });
-
-    //City
-    $.each(data.city, function (index, value) {
-        $('#City').append('<option value="' + value.id + '">' + value.title + '</option>');
-    });
+    $('#Country').selectpicker('refresh');
 
     //Main Disease
+    var hvMainDisease = $('#hvMainDisease').val();
     $.each(data.mainDisease, function (index, value) {
-        $('#MainDisease').append('<option value="' + value.id + '">' + value.title + '</option>');
+        if (value.id == hvMainDisease) {
+            $('#MainDisease').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+        }
+        else {
+            $('#MainDisease').append('<option value="' + value.id + '">' + value.title + '</option>');
+        }
     });
-    //Sub Disease
-    $.each(data.subDisease, function (index, value) {
-        $('#SubDisease').append('<option value="' + value.id + '">' + value.title + '</option>');
-    });
+    $('#MainDisease').selectpicker('refresh');
+    $('#MainDisease').trigger('change');
+   
 }
 $('#Disposition').change(function () {
     if (this.value == 1) {
         $('.preappt').show();
         $('.calba').show();
     }
-    else if (this.value == 5 || this.value == 6 || this.value == 7 || this.value == 8 || this.value == 9 || this.value == 10) {
+    else if (this.value == 5 || this.value == 6 || this.value == 7 || this.value == 8 || this.value == 9 || this.value == 10 || this.value == 11) {
         $('.preappt').hide();
         $('.calba').hide();
     }
@@ -69,21 +111,28 @@ $('#Disposition').change(function () {
         $('.calba').show();
     }
 });
-/*
+
 $('#MainDisease').change(function () {
     $('#SubDisease').html('<option value="" selected>Choose...</option>');
     if ($(this).val() !== "" && $(this).val() > 0) {
         var maindisease = $(this).val();
         var data = JSON.parse(localStorage.getItem("lookupdata"));
-        $.each(data.subDisease, function (index, value) {
+        var hvSubDisease = $('#hvSubDisease').val();
+        $.each(data.subDiseases, function (index, value) {
             if (value.parentId == maindisease) {
-                $('#SubDisease').append('<option value="' + value.id + '">' + value.title + '</option>');
+                if (value.id == hvSubDisease) {
+                    $('#SubDisease').append($('<option style="word-wrap:break-word" selected></option>').val(value.id).html(value.title));
+                }
+                else {
+                    $('#SubDisease').append($('<option style="word-wrap:break-word"></option>').val(value.id).html(value.title));
+                }
             }
         });
+        $('#SubDisease').selectpicker('refresh');
     }
 });
-*/
-$("#btnSaveNext").on('click', function () {
+
+function SaveData(bClose) {
     $("#lblError").empty();
     $('#alertError').hide();
     var data = {
@@ -103,8 +152,10 @@ $("#btnSaveNext").on('click', function () {
         Country: $('#Country').val(),
         Pin: $('#Pin').val(),
         NextCallDate: $('#NextCallDate').val(),
+        AppointmentDate: $('#AppointmentDate').val(),
         Notes: $('#Notes').val(),
         OnHold: $("#OnHold")[0].checked,
+        SaveAndClose: bClose,
     };
     var saveUrl = myurl + 'OBCall/SaveCall';
     var homeUrl = myurl + 'Home';
@@ -123,8 +174,13 @@ $("#btnSaveNext").on('click', function () {
                     window.location.href = homeUrl;
                 }
                 else {
-                    localStorage.setItem("presentnumber", result);
-                    window.location.href = callUrl + result;
+                    if (bClose) {
+                        window.location.href = homeUrl;
+                    }
+                    else {
+                        localStorage.setItem("presentnumber", result);
+                        window.location.href = callUrl + result;
+                    }
                 }
             }
         },
@@ -133,4 +189,11 @@ $("#btnSaveNext").on('click', function () {
             $("#lblError").text(textStatus);
         }
     });
+}
+
+$("#btnSaveNext").on('click', function () {
+    SaveData(false);
+});
+$("#btnSaveStop").on('click', function () {
+    SaveData(true);
 });

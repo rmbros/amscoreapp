@@ -1,4 +1,13 @@
 ﻿@model AmsApp.Models.OBLead
+<style>
+    .bootstrap-select .dropdown-menu {
+        width: 100%;
+    }
+
+    .bootstrap-select .dropdown-menu li small {
+        white-space: normal;
+    }
+</style>
 <div class="col-xl-12 pl-0 pr-0">
     <div class="card">
         <div class="card-header border-0 pb-0">
@@ -16,6 +25,7 @@
                     <select class="form-control" asp-for="Disposition">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.Disposition" id="hvDisposition" name="hvDisposition" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Name"><b>Name</b> </label>
@@ -26,6 +36,7 @@
                     <select class="form-control" asp-for="Gender">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.Gender" id="hvGender" name="hvGender" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Age"><b>Age</b> </label>
@@ -36,18 +47,21 @@
                     <select class="form-control" asp-for="MainDisease">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.MainDisease" id="hvMainDisease" name="hvMainDisease" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="SubDisease"><b>SubDisease</b> </label>
-                    <select class="form-control" asp-for="SubDisease" asp-items="ViewBag.SubDiseases">
+                    <select class="form-control" asp-for="SubDisease">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.SubDisease" id="hvSubDisease" name="hvSubDisease" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="ClinicBranch"><b>ClinicBranch</b> </label>
-                    <select class="form-control" asp-for="ClinicBranch" asp-items="ViewBag.ClinicBranchs">
+                    <select class="form-control" asp-for="ClinicBranch">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.ClinicBranch" id="hvClinicBranch" name="hvClinicBranch" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Email"><b>Email</b> </label>
@@ -59,25 +73,32 @@
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="City"><b>City</b> </label>
-                    <select class="form-control" asp-for="City" asp-items="ViewBag.Cities">
+                    <select class="form-control" asp-for="City">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.City" id="hvCity" name="hvCity" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="State"><b>State</b> </label>
-                    <select class="form-control" asp-for="State" asp-items="ViewBag.States">
+                    <select class="form-control" asp-for="State">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.State" id="hvState" name="hvState" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Country"><b>Country</b> </label>
-                    <select class="form-control" asp-for="Country" asp-items="ViewBag.Countries">
+                    <select class="form-control" asp-for="Country">
                         <option value="" selected>Choose...</option>
                     </select>
+                    <input type="hidden" value="@Model.Country" id="hvCountry" name="hvCountry" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Pin"><b>Pin</b> </label>
                     <input type="text" class="form-control" asp-for="Pin" placeholder="Enter Pin....">
+                </div>
+                <div class="form-group col-md-12  pb-3 preappt">
+                    <label asp-for="AppointmentDate"><b>Appointment Date</b> </label>
+                    <input type="datetime-local" class="form-control" asp-for="AppointmentDate" placeholder="Enter Appointment Date....">
                 </div>
                 <div class="form-group col-md-12  pb-3 calba">
                     <label asp-for="NextCallDate"><b>Next Call Date</b> </label>

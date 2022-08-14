@@ -41,7 +41,6 @@ namespace AmsApp.Controllers
         [HttpGet("OnCall/{leadId}")]
         public IActionResult OnCall(int leadId)
         {
-           // ViewBag.Dispositions = LookUpTable.GetCCDispositions(context);
             var spSql = $"EXECUTE dbo.GetOBLeadById {leadId}";
             var lead = context.OBLeads.FromSqlRaw(spSql).ToList().FirstOrDefault();
 
@@ -79,8 +78,11 @@ namespace AmsApp.Controllers
                     source.ClinicBranch = lead.ClinicBranch;
                     source.Notes = lead.Notes;
                     source.OnHold = lead.OnHold;
+                    source.AppointmentDate = lead.AppointmentDate;
                     source.NextCallDate = lead.NextCallDate;
                     source.Disposition = lead.Disposition;
+                    source.LastCalledBy = Extensions.GetEmployeeId(this);
+                    source.LastCallOn = DateTime.Now;
                     await context.SaveChangesAsync();
 
                     OBCallHistory history = new OBCallHistory();
@@ -109,8 +111,6 @@ namespace AmsApp.Controllers
                     {
                         responceMessage = newlead.Id.ToString();
                     }
-                        
-                    //return RedirectToActionPermanent("OnCall",newlead);
                 }
             }
             catch (Exception ex)

@@ -14,9 +14,9 @@ namespace AmsApp.Helpers
 
     public static class LookUpTable
     {
-        public static List<ListItem> GetCCDispositions(AMSContext context)
+        public static List<ListItem> GetOBDispositions(AMSContext context)
         {
-            return context.CCDispositions.AsNoTracking().Where(p => p.Status == 1).OrderBy(o => o.Id)
+            return context.OBDispositions.AsNoTracking().Where(p => p.Status == 1).OrderBy(o => o.Id)
                                                         .Select(c => new ListItem(c.Id,  c.Title)).ToList();
         }
         public static List<ListItem> GetGender(AMSContext context)

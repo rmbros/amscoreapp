@@ -28,7 +28,8 @@ namespace AmsApp.Models
         public int? LastCalledBy { get; set; }
         public int? Disposition { get; set; }
         public DateTime? NextCallDate { get; set; }
-        public int? PatientId { get; set; }
+        public DateTime? AppointmentDate { get; set; }
+        public string? PatientId { get; set; }
         public int? OBLeadUploadHistoryId { get; set; }
         public int? Source { get; set; }
         public int? SubSource { get; set; }
@@ -41,14 +42,12 @@ namespace AmsApp.Models
         {
             get => string.IsNullOrEmpty(Mobile)? string.Empty : $"xxxxxx{Mobile.Substring(6,4)}";
         }
-
         [NotMapped]
         public DateTime StartTime { get; set; } = DateTime.Now;
         [NotMapped]
         public DateTime EndTime { get; set; }
         [NotMapped]
-        public string NextDate { get; set; }
-        [NotMapped]
-        public string NextTime { get; set; }
+        public bool SaveAndClose { get; set; } = false;
+
     }
 }

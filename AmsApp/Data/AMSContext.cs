@@ -34,7 +34,7 @@ namespace AmsApp.Data
 
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<VwEmployees> VwEmployees { get; set; }
-        public virtual DbSet<CCDisposition> CCDispositions { get; set; } = null!;
+        public virtual DbSet<OBDisposition> OBDispositions { get; set; } = null!;
         public virtual DbSet<OBCallHistory> OBCallHistories { get; set; } = null!;
         public virtual DbSet<OBLead> OBLeads { get; set; } = null!;
         public virtual DbSet<LeadCountDto> LeadCountDtos { get; set; } = null!;
@@ -158,19 +158,19 @@ namespace AmsApp.Data
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<CCDisposition>(entity =>
+            modelBuilder.Entity<OBDisposition>(entity =>
             {
-                entity.ToTable("CCDispositions");
-
-                entity.Property(e => e.CanAssign).HasDefaultValueSql("((1))");
+                entity.ToTable("OBDispositions");
 
                 entity.Property(e => e.CreatedOn)
-                    .HasPrecision(0)
+                    .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Description).IsUnicode(false);
+                entity.Property(e => e.Description)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.ModifiedOn).HasPrecision(0);
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
 
@@ -211,6 +211,8 @@ namespace AmsApp.Data
 
                 entity.Property(e => e.AltMobile).HasMaxLength(20);
 
+                entity.Property(e => e.AppointmentDate).HasColumnType("datetime");
+
                 entity.Property(e => e.City).HasMaxLength(100);
 
                 entity.Property(e => e.Country).HasMaxLength(100);
@@ -240,6 +242,10 @@ namespace AmsApp.Data
                 entity.Property(e => e.Notes).HasMaxLength(1000);
 
                 entity.Property(e => e.OBLeadUploadHistoryId).HasColumnName("OBLeadUploadHistoryId");
+
+                entity.Property(e => e.PatientId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.State).HasMaxLength(100);
 
