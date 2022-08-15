@@ -7,5 +7,7 @@ namespace AmsApp.Dto
         public int OnHoldCount { get; set; }
         public int NextCallDateCount { get; set; }
         public int NewLeads { get; set; }
+        public int TotalCalls { get; set; }
+        public int TotalTime { get; set; }
     }
 }

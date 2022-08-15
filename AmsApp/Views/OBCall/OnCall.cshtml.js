@@ -154,7 +154,8 @@ function SaveData(bClose) {
         NextCallDate: $('#NextCallDate').val(),
         AppointmentDate: $('#AppointmentDate').val(),
         Notes: $('#Notes').val(),
-        OnHold: $("#OnHold")[0].checked,
+        OnHold: $("#StartTime")[0].checked,
+        StartTime: $('#StartTime').val(),
         SaveAndClose: bClose,
     };
     var saveUrl = myurl + 'OBCall/SaveCall';
