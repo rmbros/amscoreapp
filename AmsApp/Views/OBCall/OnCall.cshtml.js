@@ -193,8 +193,19 @@ function SaveData(bClose) {
 }
 
 $("#btnSaveNext").on('click', function () {
-    SaveData(false);
+    if ($('#Disposition').val() == 0) {
+        alert("Please select disposition")
+    }
+    else {
+        SaveData(false);
+    }
+    
 });
 $("#btnSaveStop").on('click', function () {
-    SaveData(true);
+    if ($('#Disposition').val() == 0) {
+        alert("Please select disposition")
+    }
+    else {
+        SaveData(true);
+    }
 });
