@@ -12,7 +12,7 @@
                         <i class="flaticon-381-database"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Leads</p>
+                        <p class="mb-1">Available/Leads</p>
                         <h4 class="text-white">@Model.NewLeads.ToString("000")/@Model.TotalLeads.ToString("000")</h4>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         <i class="flaticon-381-database"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Total Calls/Duration</p>
+                        <p class="mb-1">Calls/Duration</p>
                         <h4 class="text-white">@Model.TotalCalls.ToString("000")/@Model.TotalTime.ToString("000")min</h4>
                     </div>
                 </div>
@@ -71,6 +71,10 @@
             </a>
         </div>
     </div>
+</div>
+
+<div class="col-md-12 pl-5 pr-5">
+    <a id="btnCall" asp-controller="Home" asp-action="Index" class="btn btn-rounded btn-success btn-lg btn-block"><span class="btn-icon-left text-primary"><i class="fa fa-refresh"></i></span><strong>Refresh</strong></a>
 </div>
 
 @section Scripts{

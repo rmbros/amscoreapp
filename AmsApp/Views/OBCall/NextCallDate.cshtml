@@ -1,13 +1,26 @@
 ﻿@model List<AmsApp.Dto.CallDto>
 
+<div class="col-xl-12">
+    <div class="card">
+         <div class="card-header border-0 pb-0">
+            <div class="mr-auto d-lg-block text-center">
+                <h2 class="fs-18 font-w600 mb-0">Next Call Date</h2>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <ul class="list-group list-group-flush">
+                    @foreach (var item in Model)
+                    {
 
-<ul class="list-group list-group-flush">
-    @foreach (var item in Model)
-    {
+                        <li class="list-group-item"><strong>@item.MaskedMobile</strong><a id="btnCall" data="@item.Id" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-phone"></i></span></a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <li class="list-group-item"><strong>@item.MaskedMobile</strong><a id="btnCall" data="@item.Id" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-phone"></i></span></a></li>
-    }
-</ul>
 @section Scripts{
     <script src="~/Views/OBCall/Index.cshtml.js"></script>
 }
