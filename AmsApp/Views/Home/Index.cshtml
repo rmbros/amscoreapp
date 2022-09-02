@@ -21,16 +21,16 @@
     </div>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-danger">
-        <div class="card-body  p-4">
-            <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">
+    <div class="widget-stat card bg-success">
+        <div class="card-body p-4">
+            <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="flaticon-381-bookmark"></i>
+                        <i class="flaticon-381-database"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">On Hold</p>
-                        <h4 class="text-white">@Model.OnHoldCount</h4>
+                        <p class="mb-1">Total Calls/Duration</p>
+                        <h4 class="text-white">@Model.TotalCalls.ToString("000")/@Model.TotalTime.ToString("000")min</h4>
                     </div>
                 </div>
             </a>
@@ -54,23 +54,25 @@
         </div>
     </div>
 </div>
+
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-success">
-        <div class="card-body p-4">
-            <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
+    <div class="widget-stat card bg-danger">
+        <div class="card-body  p-4">
+            <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="flaticon-381-database"></i>
+                        <i class="flaticon-381-bookmark"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Total Calls/Duration</p>
-                        <h4 class="text-white">@Model.TotalCalls.ToString("000")/@Model.TotalTime.ToString("000")min</h4>
+                        <p class="mb-1">Speed</p>
+                        <h4 class="text-white">@(Model.Speed.ToString("0.##"))</h4>
                     </div>
                 </div>
             </a>
         </div>
     </div>
 </div>
+
 @section Scripts{
     <script src="~/Views/Home/Index.cshtml.js"></script>
 }

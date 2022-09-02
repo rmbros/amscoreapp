@@ -37,6 +37,7 @@ namespace AmsApp.Data
         public virtual DbSet<OBDisposition> OBDispositions { get; set; } = null!;
         public virtual DbSet<OBCallHistory> OBCallHistories { get; set; } = null!;
         public virtual DbSet<OBLead> OBLeads { get; set; } = null!;
+        public virtual DbSet<OBAssignedLead> OBAssignedLeads { get; set; } = null!;
         public virtual DbSet<LeadCountDto> LeadCountDtos { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -248,6 +249,36 @@ namespace AmsApp.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.State).HasMaxLength(100);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
+            });
+
+            modelBuilder.Entity<OBAssignedLead>(entity =>
+            {
+                entity.ToTable("OBAssignedLeads");
+
+                entity.HasIndex(e => e.Mobile, "OBAssignedLeads$Mobile")
+                    .IsUnique();
+
+                entity.Property(e => e.Address).HasMaxLength(1000);
+
+                entity.Property(e => e.AllocatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.AppointmentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Disposition).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Mobile).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.NextCallDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
             });

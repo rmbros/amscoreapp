@@ -9,6 +9,7 @@
                 public const string UserName = "UserName";
                 public const string IsAdmin = "IsAdmin";
                 public const string EmployeeId = "EmployeeId";
+                public const string EmpNameWithId = "EmpNameWithId";
                 public const string UserId = "UserId";
                 public const string RoleId = "RoleId";
                 public const string EmployeeName = "EmployeeName";

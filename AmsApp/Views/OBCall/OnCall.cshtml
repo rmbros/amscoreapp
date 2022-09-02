@@ -64,15 +64,15 @@
                     </select>
                     <input type="hidden" value="@Model.ClinicBranch" id="hvClinicBranch" name="hvClinicBranch" />
                 </div>
-                <div class="form-group col-md-12  pb-3 preappt">
+               @* <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Email"><b>Email</b> </label>
                     <input type="text" class="form-control" asp-for="Email" placeholder="Enter Email....">
-                </div>
+                </div>*@
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Address"><b>Address</b> </label>
                     <input type="text" class="form-control" asp-for="Address" placeholder="Enter Address....">
                 </div>
-                <div class="form-group col-md-12  pb-3 preappt">
+               @* <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="City"><b>City</b> </label>
                     <select class="form-control" asp-for="City">
                         <option value="" selected>Choose...</option>
@@ -92,11 +92,11 @@
                         <option value="" selected>Choose...</option>
                     </select>
                     <input type="hidden" value="@Model.Country" id="hvCountry" name="hvCountry" />
-                </div>
-                <div class="form-group col-md-12  pb-3 preappt">
+                </div>*@
+               @* <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Pin"><b>Pin</b> </label>
                     <input type="text" class="form-control" asp-for="Pin" placeholder="Enter Pin....">
-                </div>
+                </div>*@
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="AppointmentDate"><b>Appointment Date</b> </label>
                     <input type="datetime-local" class="form-control" asp-for="AppointmentDate" placeholder="Enter Appointment Date....">
@@ -105,14 +105,14 @@
                     <label asp-for="NextCallDate"><b>Next Call Date</b> </label>
                     <input type="date" class="form-control" asp-for="NextCallDate" placeholder="Enter Next Call Date....">
                 </div>
-                <div class="form-group col-md-12  pb-3 calba">
+               @* <div class="form-group col-md-12  pb-3 calba">
                     <label asp-for="Notes"><b>Notes</b> </label>
                     <input type="text" class="form-control" asp-for="Notes" placeholder="Enter Notes....">
-                </div>
-                <div class="form-group col-md-12  pb-3  pl-4 checkbox-success">
+                </div>*@
+              @*  <div class="form-group col-md-12  pb-3  pl-4 checkbox-success">
                     <input type="checkbox" class="form-check-input" asp-for="OnHold">
                     <label class="form-check-label" asp-for="OnHold"><b>On Hold</b></label>
-                </div>
+                </div>*@
                 <div class="col-md-12 pb-3">
                     <button type="button" id="btnSaveNext" class="btn btn-rounded btn-primary btn-lg btn-block"><strong>Save & Next</strong></button>
                 </div>

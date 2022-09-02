@@ -67,17 +67,17 @@ namespace AmsApp.Controllers
                     source.Name = lead.Name;
                     source.Age = lead.Age;
                     source.Gender=lead.Gender;
-                    source.Email = lead.Email;
+                    //source.Email = lead.Email;
                     source.Address = lead.Address;
-                    source.City = lead.City;
-                    source.Country = lead.Country;
-                    source.State = lead.State;
-                    source.Pin=lead.Pin;
+                    //source.City = lead.City;
+                    //source.Country = lead.Country;
+                    //source.State = lead.State;
+                    //source.Pin=lead.Pin;
                     source.MainDisease=lead.MainDisease;
                     source.SubDisease = lead.SubDisease;
                     source.ClinicBranch = lead.ClinicBranch;
-                    source.Notes = lead.Notes;
-                    source.OnHold = lead.OnHold;
+                    //source.Notes = lead.Notes;
+                    //source.OnHold = lead.OnHold;
                     source.AppointmentDate = lead.AppointmentDate;
                     source.NextCallDate = lead.NextCallDate;
                     source.Disposition = lead.Disposition;
@@ -120,14 +120,14 @@ namespace AmsApp.Controllers
             return this.Ok(responceMessage);
         }
 
-        [HttpGet("OnHold")]
-        public IActionResult OnHold()
-        {
-            var empId = Extensions.GetEmployeeId(this);
-            var strSql = $"select Id, Mobile, Name, Disposition, NextCallDate from OBLeads where OnHold =1 and AllocatedAgentId={empId}";
-            var data= context.SqlQuery<CallDto>(strSql);
-            return View(data);
-        }
+        //[HttpGet("OnHold")]
+        //public IActionResult OnHold()
+        //{
+        //    var empId = Extensions.GetEmployeeId(this);
+        //    var strSql = $"select Id, Mobile, Name, Disposition, NextCallDate from OBLeads where OnHold =1 and AllocatedAgentId={empId}";
+        //    var data= context.SqlQuery<CallDto>(strSql);
+        //    return View(data);
+        //}
 
         [HttpGet("NextCallDate")]
         public IActionResult NextCallDate()

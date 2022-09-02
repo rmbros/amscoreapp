@@ -90,7 +90,7 @@
                                 <a class="nav-link" href="javascript:;" role="button" data-toggle="dropdown">
                                     <img src="~/assets/images/profile/12.png" width="20" alt="" />
                                     <div class="header-info">
-                                        <span>Hello,<strong> @User.Claims.First(c => c.Type.Equals(AmsApp.Helpers.Constants.Strings.AMSClaimIdentifiers.EmployeeName)).Value</strong></span>
+                                        <span><strong> @User.Claims.First(c => c.Type.Equals(AmsApp.Helpers.Constants.Strings.AMSClaimIdentifiers.EmpNameWithId)).Value</strong></span>
                                     </div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -164,7 +164,7 @@
 
     <script>
        // var myurl="http://localhost/AmsApp/";
-       //  var myurl = "http://localhost:5110/";
+       // var myurl = "http://localhost:5110/";
          var myurl = "http://app.drcareams.com/";
         // Add remove loading class on body element depending on Ajax request status
         $(document).on({

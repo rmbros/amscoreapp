@@ -48,40 +48,40 @@ function LoadData() {
     $('#Gender').selectpicker('refresh');
 
     //City
-    var hvCity = $('#hvCity').val();
-    $.each(data.city, function (index, value) {
-        if (value.id == hvCity) {
-            $('#City').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
-        }
-        else {
-            $('#City').append('<option value="' + value.id + '">' + value.title + '</option>');
-        }
-    });
-    $('#City').selectpicker('refresh');
+    //var hvCity = $('#hvCity').val();
+    //$.each(data.city, function (index, value) {
+    //    if (value.id == hvCity) {
+    //        $('#City').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+    //    }
+    //    else {
+    //        $('#City').append('<option value="' + value.id + '">' + value.title + '</option>');
+    //    }
+    //});
+    //$('#City').selectpicker('refresh');
 
     //State
-    var hvState = $('#hvState').val();
-    $.each(data.state, function (index, value) {
-        if (value.id == hvState) {
-            $('#State').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
-        }
-        else {
-            $('#State').append('<option value="' + value.id + '">' + value.title + '</option>');
-        }
-    });
-    $('#State').selectpicker('refresh');
+    //var hvState = $('#hvState').val();
+    //$.each(data.state, function (index, value) {
+    //    if (value.id == hvState) {
+    //        $('#State').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+    //    }
+    //    else {
+    //        $('#State').append('<option value="' + value.id + '">' + value.title + '</option>');
+    //    }
+    //});
+    //$('#State').selectpicker('refresh');
 
     //Country
-    var hvCountry = $('#hvCountry').val();
-    $.each(data.country, function (index, value) {
-        if (value.id == hvCountry) {
-            $('#Country').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
-        }
-        else {
-            $('#Country').append('<option value="' + value.id + '">' + value.title + '</option>');
-        }
-    });
-    $('#Country').selectpicker('refresh');
+    //var hvCountry = $('#hvCountry').val();
+    //$.each(data.country, function (index, value) {
+    //    if (value.id == hvCountry) {
+    //        $('#Country').append('<option value="' + value.id + '" selected>' + value.title + '</option>');
+    //    }
+    //    else {
+    //        $('#Country').append('<option value="' + value.id + '">' + value.title + '</option>');
+    //    }
+    //});
+    //$('#Country').selectpicker('refresh');
 
     //Main Disease
     var hvMainDisease = $('#hvMainDisease').val();
@@ -145,16 +145,16 @@ function SaveData(bClose) {
         MainDisease: $('#MainDisease').val(),
         SubDisease: $('#SubDisease').val(),
         ClinicBranch: $('#ClinicBranch').val(),
-        Email: $('#Email').val(),
+      /*  Email: $('#Email').val(),*/
         Address: $('#Address').val(),
-        City: $('#City').val(),
-        State: $('#State').val(),
-        Country: $('#Country').val(),
-        Pin: $('#Pin').val(),
+        //City: $('#City').val(),
+        //State: $('#State').val(),
+        //Country: $('#Country').val(),
+        //Pin: $('#Pin').val(),
         NextCallDate: $('#NextCallDate').val(),
         AppointmentDate: $('#AppointmentDate').val(),
-        Notes: $('#Notes').val(),
-        OnHold: $("#StartTime")[0].checked,
+        //Notes: $('#Notes').val(),
+        //OnHold: $("#StartTime")[0].checked,
         StartTime: $('#StartTime').val(),
         SaveAndClose: bClose,
     };

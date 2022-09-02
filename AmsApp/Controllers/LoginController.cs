@@ -54,6 +54,8 @@ namespace AmsApp.Controllers
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.BioMetricId, emp.BioMetricId));
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.BranchId, emp.Branch.ToString()));
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.BranchName, emp.BranchName));
+                    claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.EmpNameWithId, emp.EmpNameWithId));
+                    
                 }
                 else
                 {
@@ -61,6 +63,7 @@ namespace AmsApp.Controllers
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.BioMetricId, "0"));
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.BranchId, "0"));
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.BranchName, "All"));
+                    claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.EmpNameWithId, "Admin"));
                 }
 
                 var claimsIdentity = new ClaimsIdentity(claims, "Login");

@@ -9,5 +9,6 @@ namespace AmsApp.Dto
         public int NewLeads { get; set; }
         public int TotalCalls { get; set; }
         public int TotalTime { get; set; }
+        public decimal Speed { get; set; }
     }
 }

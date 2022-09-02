@@ -40,12 +40,11 @@ namespace AmsApp.Controllers
                 Gender = LookUpTable.GetGender(_db),
                 ClinicBranch = LookUpTable.GetClinicBranchs(_db),
                 MainDisease = LookUpTable.GetMainDiseases(_db),
-                SubDiseases = LookUpTable.GetSubDiseases(_db),
-                City = LookUpTable.GetCities(_db),
-                State = LookUpTable.GetStates(_db),
-                Country = LookUpTable.GetCountries(_db)
+                SubDiseases = LookUpTable.GetSubDiseases(_db)
             };
-
+            //City = LookUpTable.GetCities(_db),
+            //State = LookUpTable.GetStates(_db),
+            //Country = LookUpTable.GetCountries(_db)
             return Json(data);
         }
 

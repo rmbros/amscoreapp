@@ -10072,9 +10072,9 @@ svg.pulse-svg {
         .header-right .header-profile > a.nav-link .header-info {
           padding-right: 10px;
           padding-left: 10px; } }
-      @media only screen and (max-width: 767px) {
+    /*  @media only screen and (max-width: 767px) {
         .header-right .header-profile > a.nav-link .header-info {
-          display: none; } }
+          display: none; } }*/
       .header-right .header-profile > a.nav-link .header-info span {
         font-size: 16x;
         color: #36C95F;
