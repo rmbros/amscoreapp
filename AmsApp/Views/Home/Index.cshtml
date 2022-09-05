@@ -26,7 +26,7 @@
             <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="flaticon-381-database"></i>
+                        <i class="flaticon-381-phone-call"></i>
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Calls/Duration</p>
@@ -40,14 +40,14 @@
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-warning">
         <div class="card-body p-4">
-            <a asp-controller="OBCall" asp-action="NextCallDate" aria-expanded="false">
+            <a href="#" aria-expanded="false">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="flaticon-381-calendar-1"></i>
+                        <i class="flaticon-381-calendar"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Next Call Date</p>
-                        <h4 class="text-white">@Model.NextCallDateCount</h4>
+                        <p class="mb-1">Appointments/Visited</p>
+                        <h4 class="text-white">@Model.Appointments.ToString("000")/@Model.Visited.ToString("000")</h4>
                     </div>
                 </div>
             </a>
@@ -61,11 +61,28 @@
             <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="flaticon-381-bookmark"></i>
+                        <i class="flaticon-381-stopclock"></i>
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Speed</p>
-                        <h4 class="text-white">@(Model.Speed.ToString("0.##"))</h4>
+                        <h4 class="text-white">@Model.Speed</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
+    <div class="widget-stat card bg-info">
+        <div class="card-body p-4">
+            <a asp-controller="OBCall" asp-action="NextCallDate" aria-expanded="false">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="flaticon-381-calendar-1"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Next Call Date</p>
+                        <h4 class="text-white">@Model.NextCallDateCount</h4>
                     </div>
                 </div>
             </a>
