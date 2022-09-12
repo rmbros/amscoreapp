@@ -11,6 +11,8 @@ namespace AmsApp.Dto
         public int TotalTime { get; set; }
         public int Appointments { get; set; }
         public int Visited { get; set; }
+        public int Interested { get; set; }
+        public int Callback { get; set; }
         public double Speed
         {
             get => TotalCalls == 0 ? 0 : Math.Round(TotalTime / (TotalCalls * 1.0), 2);

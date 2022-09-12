@@ -2,94 +2,110 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-info">
-        <div class="card-body p-4">
-            <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
-                <div class="media">
-                    <span class="mr-3">
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-info">
+            <div class="card-body p-4">
+                <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
+                    <div class="media">
+                        @* <span class="mr-3">
                         <i class="flaticon-381-database"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Available/Leads</p>
-                        <h4 class="text-white">@Model.NewLeads.ToString("000")/@Model.TotalLeads.ToString("000")</h4>
+                        </span>*@
+                        <div class="media-body text-white text-left">
+                            <p class="mb-1">Available/Leads</p>
+                            <h5 class="text-white">@Model.NewLeads.ToString("000")/@Model.TotalLeads.ToString("000")</h5>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-success">
-        <div class="card-body p-4">
-            <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
-                <div class="media">
-                    <span class="mr-3">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-success">
+            <div class="card-body p-4">
+                <a asp-controller="OBCall" asp-action="Index" aria-expanded="false">
+                    <div class="media">
+                        @* <span class="mr-3">
                         <i class="flaticon-381-phone-call"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Calls/Duration</p>
-                        <h4 class="text-white">@Model.TotalCalls.ToString("000")/@Model.TotalTime.ToString("000")min</h4>
+                        </span>*@
+                        <div class="media-body text-white text-left">
+                            <p class="mb-1">Calls/Duration</p>
+                            <h5 class="text-white">@Model.TotalCalls.ToString("000")/@Model.TotalTime.ToString("000")min</h5>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
 </div>
-<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-warning">
-        <div class="card-body p-4">
-            @*<a href="#" aria-expanded="false">*@
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-warning">
+            <div class="card-body p-4">
                 <div class="media">
-                    <span class="mr-3">
-                        <i class="flaticon-381-calendar"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Appointments/Visited</p>
-                        <h4 class="text-white">@Model.Appointments.ToString("000")/@Model.Visited.ToString("000")</h4>
+                    <div class="media-body text-white text-left">
+                        <p class="mb-1">Appointments/ Visited</p>
+                        <h5 class="text-white">@Model.Appointments.ToString("000")/@Model.Visited.ToString("000")</h5>
                     </div>
                 </div>
-            @*</a>*@
+            </div>
         </div>
     </div>
-</div>
-
-<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-danger">
-        <div class="card-body  p-4">
-           @* <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">*@
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-danger">
+            <div class="card-body  p-4">
                 <div class="media">
-                    <span class="mr-3">
-                        <i class="flaticon-381-stopclock"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
+                    <div class="media-body text-white text-left">
                         <p class="mb-1">Speed</p>
-                        <h4 class="text-white">@Model.Speed</h4>
+                        <h5 class="text-white">@Model.Speed</h5>
                     </div>
                 </div>
-          @*  </a>*@
+            </div>
         </div>
     </div>
 </div>
-<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
-    <div class="widget-stat card bg-info">
-        <div class="card-body p-4">
-            <a asp-controller="OBCall" asp-action="NextCallDate" asp-route-calldate="@DateTime.Today.ToString("yyyy-MM-dd")" aria-expanded="false">
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-info">
+            <div class="card-body p-4">
+                <a asp-controller="OBCall" asp-action="NextCallDate" asp-route-calldate="@DateTime.Today.ToString("yyyy-MM-dd")" aria-expanded="false">
+                    <div class="media">
+                        <div class="media-body text-white text-left">
+                            <p class="mb-1">Next Call Date</p>
+                            <h5 class="text-white">@Model.NextCallDateCount</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-danger">
+            <div class="card-body  p-4">
                 <div class="media">
-                    <span class="mr-3">
-                        <i class="flaticon-381-calendar-1"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Next Call Date</p>
-                        <h4 class="text-white">@Model.NextCallDateCount</h4>
+                    <div class="media-body text-white text-left">
+                        <p class="mb-1">Interested</p>
+                        <h5 class="text-white">@Model.Interested</h5>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-danger">
+            <div class="card-body  p-4">
+                <div class="media">
+                    <div class="media-body text-white text-left">
+                        <p class="mb-1">Callback</p>
+                        <h5 class="text-white">@Model.Callback</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="col-md-12 pl-5 pr-5">
     <a id="btnCall" asp-controller="Home" asp-action="Index" class="btn btn-rounded btn-success btn-lg btn-block"><span class="btn-icon-left text-primary"><i class="fa fa-refresh"></i></span><strong>Refresh</strong></a>
 </div>
