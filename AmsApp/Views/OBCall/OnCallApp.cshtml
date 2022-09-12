@@ -13,20 +13,13 @@
         <div class="card-header border-0 pb-0">
         </div>
         <div class="card-body">
-            @*<form id="frmOnCall" name="frmOnCall">*@
             <div class="form-row">
                 <div class="form-group col-md-12 pb-3 pt-2 center">
                     <label><b>@Model.MaskedMobile</b> </label>
                     <input type="hidden" asp-for="Mobile" />
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="StartTime" />
-                </div>
-                <div class="form-group col-md-12  pb-3">
-                    <label asp-for="Disposition"> <b>Disposition</b> </label>
-                    <select class="form-control" asp-for="Disposition">
-                        <option value="" selected>Choose...</option>
-                    </select>
-                    <input type="hidden" value="@Model.Disposition" id="hvDisposition" name="hvDisposition" />
+                    <input type="hidden" asp-for="Disposition" />
                 </div>
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Name"><b>Name</b> </label>
@@ -64,60 +57,21 @@
                     </select>
                     <input type="hidden" value="@Model.ClinicBranch" id="hvClinicBranch" name="hvClinicBranch" />
                 </div>
-               @* <div class="form-group col-md-12  pb-3 preappt">
-                    <label asp-for="Email"><b>Email</b> </label>
-                    <input type="text" class="form-control" asp-for="Email" placeholder="Enter Email....">
-                </div>*@
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="Address"><b>Address</b> </label>
                     <input type="text" class="form-control" asp-for="Address" placeholder="Enter Address....">
                 </div>
-               @* <div class="form-group col-md-12  pb-3 preappt">
-                    <label asp-for="City"><b>City</b> </label>
-                    <select class="form-control" asp-for="City">
-                        <option value="" selected>Choose...</option>
-                    </select>
-                    <input type="hidden" value="@Model.City" id="hvCity" name="hvCity" />
-                </div>
-                <div class="form-group col-md-12  pb-3 preappt">
-                    <label asp-for="State"><b>State</b> </label>
-                    <select class="form-control" asp-for="State">
-                        <option value="" selected>Choose...</option>
-                    </select>
-                    <input type="hidden" value="@Model.State" id="hvState" name="hvState" />
-                </div>
-                <div class="form-group col-md-12  pb-3 preappt">
-                    <label asp-for="Country"><b>Country</b> </label>
-                    <select class="form-control" asp-for="Country">
-                        <option value="" selected>Choose...</option>
-                    </select>
-                    <input type="hidden" value="@Model.Country" id="hvCountry" name="hvCountry" />
-                </div>*@
-               @* <div class="form-group col-md-12  pb-3 preappt">
-                    <label asp-for="Pin"><b>Pin</b> </label>
-                    <input type="text" class="form-control" asp-for="Pin" placeholder="Enter Pin....">
-                </div>*@
                 <div class="form-group col-md-12  pb-3 preappt">
                     <label asp-for="AppointmentDate"><b>Appointment Date</b> </label>
                     <input type="datetime-local" class="form-control" asp-for="AppointmentDate" placeholder="Enter Appointment Date....">
+                    <input type="hidden" value="@ViewBag.Date" id="hvAppointmentDate" name="hvAppointmentDate" />
                 </div>
                 <div class="form-group col-md-12  pb-3 calba">
                     <label asp-for="NextCallDate"><b>Next Call Date</b> </label>
-                    <input type="date" class="form-control" asp-for="NextCallDate" placeholder="Enter Next Call Date....">
-                </div>
-               @* <div class="form-group col-md-12  pb-3 calba">
-                    <label asp-for="Notes"><b>Notes</b> </label>
-                    <input type="text" class="form-control" asp-for="Notes" placeholder="Enter Notes....">
-                </div>*@
-              @*  <div class="form-group col-md-12  pb-3  pl-4 checkbox-success">
-                    <input type="checkbox" class="form-check-input" asp-for="OnHold">
-                    <label class="form-check-label" asp-for="OnHold"><b>On Hold</b></label>
-                </div>*@
-                <div class="col-md-12 pb-3">
-                    <button type="button" id="btnSaveNext" class="btn btn-rounded btn-primary btn-lg btn-block"><strong>Save & Next</strong></button>
+                    <input type="date" class="form-control" asp-for="NextCallDate" placeholder="Enter Next Call Date....">                    
                 </div>
                 <div class="col-md-12 pb-3">
-                    <button type="button" id="btnSaveStop" class="btn btn-rounded btn-danger btn-lg btn-block"><strong>Save & Close</strong></button>
+                    <button type="button" id="btnSave" class="btn btn-rounded btn-primary btn-lg btn-block"><strong>Save</strong></button>
                 </div>
                 <div class="alert alert-danger" style="display:none;" id="alertError" name="alertError">
                     <span><label name="lblError" id="lblError"></label></span>
@@ -126,10 +80,9 @@
                     <span><label name="lblSuccess" id="lblSuccess"></label></span>
                 </div>
             </div>
-            @*</form>*@
         </div>
     </div>
 </div>
 @section Scripts{
-    <script src="~/Views/OBCall/OnCall.cshtml.js"></script>
+    <script src="~/Views/OBCall/OnCallApp.cshtml.js"></script>
 }

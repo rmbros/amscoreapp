@@ -40,7 +40,7 @@
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-warning">
         <div class="card-body p-4">
-            <a href="#" aria-expanded="false">
+            @*<a href="#" aria-expanded="false">*@
                 <div class="media">
                     <span class="mr-3">
                         <i class="flaticon-381-calendar"></i>
@@ -50,7 +50,7 @@
                         <h4 class="text-white">@Model.Appointments.ToString("000")/@Model.Visited.ToString("000")</h4>
                     </div>
                 </div>
-            </a>
+            @*</a>*@
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-danger">
         <div class="card-body  p-4">
-            <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">
+           @* <a asp-controller="OBCall" asp-action="OnHold" aria-expanded="false">*@
                 <div class="media">
                     <span class="mr-3">
                         <i class="flaticon-381-stopclock"></i>
@@ -68,14 +68,14 @@
                         <h4 class="text-white">@Model.Speed</h4>
                     </div>
                 </div>
-            </a>
+          @*  </a>*@
         </div>
     </div>
 </div>
 <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-4">
     <div class="widget-stat card bg-info">
         <div class="card-body p-4">
-            <a asp-controller="OBCall" asp-action="NextCallDate" aria-expanded="false">
+            <a asp-controller="OBCall" asp-action="NextCallDate" asp-route-calldate="@DateTime.Today.ToString("yyyy-MM-dd")" aria-expanded="false">
                 <div class="media">
                     <span class="mr-3">
                         <i class="flaticon-381-calendar-1"></i>

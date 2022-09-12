@@ -4,26 +4,9 @@
     <div class="card">
          <div class="card-header border-0 pb-0">
             <div class="mr-auto d-lg-block text-center">
-                <h2 class="fs-18 font-w600 mb-0">Next Call Date</h2>
+                <h2 class="fs-18 font-w600 mb-0">Appointments</h2>
             </div>
         </div>
-        @*<div class="card-body">
-            <div class="row">
-                <div class="form-group col-md-12  pb-3 calba">
-                    <label for="CallDate"><b>Next Call Date</b> </label>
-                    <input type="date" class="form-control" id="CallDate" name="CallDate" value="@ViewBag.Date">
-                </div>
-            </div>
-            <div class="row">
-                <ul class="list-group list-group-flush">
-                    @foreach (var item in Model)
-                    {
-
-                        <li class="list-group-item"><strong>@item.MaskedMobile</strong><a id="btnCall" data="@item.Id" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-phone"></i></span></a></li>
-                    }
-                </ul>
-            </div>
-        </div>*@
         <div class="card-body">
             <div class="row">
                 <div class="form-group col-md-12">
@@ -45,5 +28,5 @@
 </div>
 
 @section Scripts{
-    <script src="~/Views/OBCall/NextCallDate.cshtml.js"></script>
+    <script src="~/Views/OBCall/Appointments.cshtml.js"></script>
 }
