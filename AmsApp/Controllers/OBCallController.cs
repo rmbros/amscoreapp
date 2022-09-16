@@ -73,7 +73,7 @@ namespace AmsApp.Controllers
             var responceMessage = string.Empty;
             var source = context.OBLeads.Where(p => p.Id == lead.Id).FirstOrDefault();
             var userId = Extensions.GetUserId(this);
-            lead.EndTime=DateTime.Now;
+            lead.EndTime = DateTime.Now;
             try
             {
                 if (source == null)
@@ -82,44 +82,47 @@ namespace AmsApp.Controllers
                 }
                 else
                 {
-                    source.ModifiedBy = userId;
-                    source.ModifiedOn = DateTime.Now;
-                    source.Name = lead.Name;
-                    source.Age = lead.Age;
-                    source.Gender=lead.Gender;
-                    //source.Email = lead.Email;
-                    source.Address = lead.Address;
-                    //source.City = lead.City;
-                    //source.Country = lead.Country;
-                    //source.State = lead.State;
-                    //source.Pin=lead.Pin;
-                    source.MainDisease=lead.MainDisease;
-                    source.SubDisease = lead.SubDisease;
-                    source.ClinicBranch = lead.ClinicBranch;
-                    //source.Notes = lead.Notes;
-                    //source.OnHold = lead.OnHold;
-                    source.AppointmentDate = lead.AppointmentDate;
-                    source.NextCallDate = lead.NextCallDate; 
-                    source.Disposition = lead.Disposition;
-                    source.LastCalledBy = Extensions.GetEmployeeId(this);
-                    source.LastCallOn = DateTime.Now;
-                    await context.SaveChangesAsync();
+                    if (!context.OBCallHistories.Any(o => o.LeadId == lead.Id && o.AgentId == Extensions.GetEmployeeId(this) &&  o.CallDate == DateTime.Today))
+                    {
+                        source.ModifiedBy = userId;
+                        source.ModifiedOn = DateTime.Now;
+                        source.Name = lead.Name;
+                        source.Age = lead.Age;
+                        source.Gender = lead.Gender;
+                        //source.Email = lead.Email;
+                        source.Address = lead.Address;
+                        //source.City = lead.City;
+                        //source.Country = lead.Country;
+                        //source.State = lead.State;
+                        //source.Pin=lead.Pin;
+                        source.MainDisease = lead.MainDisease;
+                        source.SubDisease = lead.SubDisease;
+                        source.ClinicBranch = lead.ClinicBranch;
+                        //source.Notes = lead.Notes;
+                        //source.OnHold = lead.OnHold;
+                        source.AppointmentDate = lead.AppointmentDate;
+                        source.NextCallDate = lead.NextCallDate;
+                        source.Disposition = lead.Disposition;
+                        source.LastCalledBy = Extensions.GetEmployeeId(this);
+                        source.LastCallOn = DateTime.Now;
+                        await context.SaveChangesAsync();
 
-                    OBCallHistory history = new OBCallHistory();
-                    history.Disposition = lead.Disposition;
-                    history.NextCallDate = lead.NextCallDate;
-                    history.CreatedOn= DateTime.Now;
-                    history.LeadId = lead.Id;
-                    history.AgentId = Extensions.GetEmployeeId(this);
-                    history.CallDate = DateTime.Today;
-                    history.StartTime = lead.StartTime;
-                    history.EndTime = lead.EndTime;
-                    history.Duration = Convert.ToInt32((lead.EndTime - lead.StartTime).TotalSeconds);
+                        OBCallHistory history = new OBCallHistory();
+                        history.Disposition = lead.Disposition;
+                        history.NextCallDate = lead.NextCallDate;
+                        history.CreatedOn = DateTime.Now;
+                        history.LeadId = lead.Id;
+                        history.AgentId = Extensions.GetEmployeeId(this);
+                        history.CallDate = DateTime.Today;
+                        history.StartTime = lead.StartTime;
+                        history.EndTime = lead.EndTime;
+                        history.Duration = Convert.ToInt32((lead.EndTime - lead.StartTime).TotalSeconds);
 
-                    context.OBCallHistories.Add(history);
-                    await context.SaveChangesAsync();
+                        context.OBCallHistories.Add(history);
+                        await context.SaveChangesAsync();
+                    }
 
-                    if(lead.SaveAndClose)
+                    if (lead.SaveAndClose)
                     {
                         responceMessage = "Done";
                     }
@@ -160,7 +163,7 @@ namespace AmsApp.Controllers
         public IActionResult NextCallDate(string calldate)
         {
             if (string.IsNullOrEmpty(calldate)) calldate = DateTime.Today.ToString("yyyy-MM-dd");
-            ViewBag.Date= calldate;
+            ViewBag.Date = calldate;
             var empId = Extensions.GetEmployeeId(this);
             var strSql = $"select Id, Mobile, Name, Disposition, NextCallDate from OBLeads where AllocatedAgentId={empId} and PatientId is null and NextCallDate = '{calldate}' ";
             var data = context.SqlQuery<CallDto>(strSql);
