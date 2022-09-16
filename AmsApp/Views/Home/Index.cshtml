@@ -56,7 +56,7 @@
             <div class="card-body  p-4">
                 <div class="media">
                     <div class="media-body text-white text-left">
-                        <p class="mb-1">Speed</p>
+                        <p class="mb-1">Speed(1.25~1.75)</p>
                         <h5 class="text-white">@Model.Speed</h5>
                     </div>
                 </div>
@@ -100,6 +100,18 @@
                     <div class="media-body text-white text-left">
                         <p class="mb-1">Callback</p>
                         <h5 class="text-white">@Model.Callback</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+        <div class="widget-stat card bg-danger">
+            <div class="card-body  p-4">
+                <div class="media">
+                    <div class="media-body text-white text-left">
+                        <p class="mb-1">Time Wasted</p>
+                        <h5 class="text-white">@Model.TimeWasted.ToString("000")min</h5>
                     </div>
                 </div>
             </div>
