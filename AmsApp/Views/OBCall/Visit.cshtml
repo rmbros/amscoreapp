@@ -1,0 +1,49 @@
+﻿@model AmsApp.Models.OBLead
+
+@{
+    ViewData["Title"] = "";
+}
+<div class="col-xl-12">
+    <div class="card">
+         <div class="card-header border-0 pb-0">
+            <div class="mr-auto d-lg-block">
+                <h4 class="fs-28 font-w600 mb-0">Patient Visit Data</h4>
+            </div>
+            <div class="search-area ml-auto d-inline-flex">
+            <a asp-area="" asp-controller="CCOutBound" asp-action="Visits"><i class="fa fa-long-arrow-left"></i><b>Back</b></a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-validation">
+                 <form class="form-valide" id="frmVisit" method="post" name="frmVisit">
+                      <input type="hidden" asp-for="Id" />
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Mobile"><b>Mobile</b> </label>
+                            <input type="text" readonly class="form-control" asp-for="Mobile">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="Name"><b>Name</b> </label>
+                            <input type="text" readonly class="form-control" asp-for="Name">
+                        </div>
+                         <div class="form-group col-md-12">
+                            <label asp-for="AppointmentDate"><b>AppointmentDate</b> </label>
+                            <input type="datetime-local" readonly class="form-control" asp-for="AppointmentDate">
+                        </div>
+                         <div class="form-group col-md-12">
+                            <label asp-for="PatientId"><b>PatientId</b> </label>
+                            <input type="text" class="form-control" asp-for="PatientId" required>
+                        </div>
+                    </div>
+                     <button type="button" id="btnSave" class="btn mr-2 btn-primary">Submit</button>
+                      <div class="alert alert-danger" style="display:none;" id="alertError">
+                        <span><label id="lblError" name="lblError"></label></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Views/OBCall/Visit.cshtml.js"></script>
+}

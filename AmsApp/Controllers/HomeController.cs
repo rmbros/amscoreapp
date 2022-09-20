@@ -28,6 +28,7 @@ namespace AmsApp.Controllers
             var empId = Extensions.GetEmployeeId(this);
             var spSql = $"EXECUTE dbo.GetOBLeadsCountByEmpId {empId}";
             var lead = _db.LeadCountDtos.FromSqlRaw(spSql).ToList().FirstOrDefault();
+            
             return View(lead);
         }
 

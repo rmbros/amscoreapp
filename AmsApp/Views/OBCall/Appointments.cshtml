@@ -2,7 +2,7 @@
 
 <div class="col-xl-12">
     <div class="card">
-         <div class="card-header border-0 pb-0">
+        <div class="card-header border-0 pb-0">
             <div class="mr-auto d-lg-block text-center">
                 <h2 class="fs-18 font-w600 mb-0">Appointments</h2>
             </div>
@@ -19,7 +19,7 @@
                     @foreach (var item in Model)
                     {
 
-                        <li class="list-group-item  d-flex justify-content-between align-items-center"><strong>@item.MaskedMobile</strong><a onclick="call(@item.Id);" data="@item.Id" href="javascript:"><span class="btn-icon-left text-primary"><i class="fa fa-phone"></i></span></a></li>
+                        <li class="list-group-item  d-flex justify-content-between"><span class="left"><strong>@item.MaskedMobile</strong><br /><strong>@item.Name</strong></span><a onclick="call(@item.Id);" data="@item.Id" href="javascript:"><span class="btn-icon-left btn-lg text-primary"><i class="fa fa-phone"></i></span></a></li>
                     }
                 </ul>
             </div>

@@ -24,7 +24,7 @@ namespace AmsApp.Dto
                 DateTime dayend = DateTime.Now.Date.AddHours(18).AddMinutes(30);
                 DateTime endTime = dayend.Subtract(DateTime.Now).TotalSeconds < 0 ? dayend : DateTime.Now;
                 TimeSpan span = endTime.Subtract(startTime);
-                if (endTime.Hour > 14)
+                if (endTime.Hour >= 14)
                 {
                     return Convert.ToInt32(span.TotalMinutes) - TotalTime - 30; //30min lunch break
                 }
@@ -34,5 +34,16 @@ namespace AmsApp.Dto
                 }
             }
         }
+    }
+
+    public class OBVisitListDto
+    {
+        public int Id { get; set; }
+        public string Mobile { get; set; } = null!;
+        public string? Name { get; set; }
+        public string? Agent { get; set; }
+        public string? Status { get; set; }
+        public string? AppointmentDate { get; set; }
+        public string? Actions { get; set; }
     }
 }

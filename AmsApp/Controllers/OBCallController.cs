@@ -196,5 +196,113 @@ namespace AmsApp.Controllers
             var data = context.SqlQuery<CallDto>(strSql);
             return View(data);
         }
+
+        [HttpGet("Visits")]
+        public IActionResult Visits()
+        {
+            return View();
+        }
+
+        [HttpPost("GetVisitsList")]
+        public IActionResult GetVisitsList(SearchDto searchDto)
+        {
+            try
+            {
+                var empId = Extensions.GetEmployeeId(this);
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 10;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                var patientData = (from x in context.OBLeads
+                                   join e in context.VwEmployees on x.AllocatedAgentId equals e.EmployeeId into em
+                                   from e in em.DefaultIfEmpty()
+                                   where x.AllocatedAgentId == empId && x.Disposition == 1 && x.AppointmentDate != null
+                                 && (string.IsNullOrEmpty(searchDto.Mobile) || x.Mobile == searchDto.Mobile)
+                                 && (string.IsNullOrEmpty(searchDto.FromDate) || x.AppointmentDate >= Convert.ToDateTime(searchDto.FromDate))
+                                 && (string.IsNullOrEmpty(searchDto.ToDate) || x.AppointmentDate < Convert.ToDateTime(searchDto.ToDate).AddDays(1))
+                                   select new OBVisitListDto
+                                   {
+                                       Id = x.Id,
+                                       Name = x.Name,
+                                       Mobile = x.Mobile,
+                                       Agent = e.EmpNameWithId,
+                                       Status = x.PatientId == null ? string.Empty : "<span class='badge light badge-success'>Visited</span>",
+                                       AppointmentDate = x.AppointmentDate != null ? x.AppointmentDate.Value.ToString("dd/MM/yyyy hh:mm tt") : string.Empty,
+                                       Actions = "<a class='btn btn-primary shadow btn-xs sharp mr-1' href='Visit/" + x.Id + "' title='Edit'><i class='fa fa-pencil'></i></a>"
+                                   });
+
+                if (!(string.IsNullOrEmpty(sortColumn)))
+                {
+                    if (sortColumnDirection == "desc")
+                    {
+                        patientData = patientData.OrderByDescending(s => sortColumn);
+                    }
+                    else
+                    {
+                        patientData = patientData.OrderBy(s => sortColumn);
+                    }
+
+                }
+                else
+                {
+                    patientData = patientData.OrderByDescending(s => s.Name);
+                }
+
+
+                recordsTotal = patientData.Count();
+                var data = patientData.Skip(skip).Take(pageSize).ToList();
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("Visit/{id}")]
+        public async Task<IActionResult> Visit(int id)
+        {
+            var data = await context.OBLeads.AsNoTracking().Where(p => p.Id == id).FirstOrDefaultAsync();
+            return View(data);
+        }
+
+        [HttpPost("Visit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Visit(OBLead source)
+        {
+            var responceMessage = string.Empty;
+            try
+            {
+                if (source == null || source.PatientId == null)
+                {
+                    throw new ApplicationException("Invalid request");
+                }
+                else
+                {
+                    source.ModifiedBy = Extensions.GetUserId(this);
+                    source.ModifiedOn = DateTime.Now;
+                    source.Status = 2;
+                    context.OBLeads.Attach(source);
+                    context.Entry(source).Property(x => x.PatientId).IsModified = true;
+                    context.Entry(source).Property(x => x.ModifiedOn).IsModified = true;
+                    context.Entry(source).Property(x => x.ModifiedBy).IsModified = true;
+                    context.Entry(source).Property(x => x.Status).IsModified = true;
+                    await context.SaveChangesAsync();
+                    responceMessage = "Done";
+                }
+            }
+            catch (Exception ex)
+            {
+                responceMessage = $"Error:{ex.Message}";
+            }
+            return this.Ok(responceMessage);
+        }
     }
 }
