@@ -18,8 +18,26 @@
                 <ul class="list-group">
                     @foreach (var item in Model)
                     {
-
-                        <li class="list-group-item  d-flex justify-content-between"><span class="left"><strong>@item.MaskedMobile</strong><br /><strong>@item.Name</strong></span><a onclick="call(@item.Id);" data="@item.Id" href="javascript:"><span class="btn-icon-left btn-lg text-primary"><i class="fa fa-phone"></i></span></a></li>
+                        <li class="list-group-item justify-content-between">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:95%;">
+                                        <strong>@item.MaskedMobile</strong>
+                                    </td>
+                                    <td style="width:5%;">
+                                        <a onclick="visit(@item.Id);" data="@item.Id" href="javascript:"><span class="btn-icon-left btn-lg text-danger"><i class="fa fa-pencil"></i></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style ="width:95%;">
+                                        <strong>@item.Name</strong>
+                                    </td>
+                                    <td style="width:5%;" align="right">
+                                        <a onclick="call(@item.Id);" data="@item.Id" href="javascript:"><span class="btn-icon-left btn-lg text-primary"><i class="fa fa-phone"></i></span></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
                     }
                 </ul>
             </div>

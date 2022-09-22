@@ -8,6 +8,11 @@ function call(leadid) {
     window.location.href = callUrl;
 }
 
+function visit(leadid) {
+    var callUrl = myurl + 'OBCall/Visit/' + leadid;
+    window.location.href = callUrl;
+}
+
 $('#CallDate').change(function () {
     var date = $(this).val();
     var callUrl = myurl + 'OBCall/Appointments/' + date;

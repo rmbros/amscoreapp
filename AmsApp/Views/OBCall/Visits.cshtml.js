@@ -15,12 +15,11 @@ function loadTable(fData) {
             "data": fData
         },
         "columns": [
-            { "data": "actions", "autoWidth": true },
             { "data": "mobile", "name": "Mobile", "autoWidth": true },
             { "data": "name", "name": "Name", "autoWidth": true },
             { "data": "agent", "name": "Agent", "autoWidth": true },
-            { "data": "appointmentDate", "autoWidth": true },
-            { "data": "status", "name": "Status", "autoWidth": true }           
+            { "data": "visitDate", "autoWidth": true },
+            { "data": "patientId", "name": "Status", "autoWidth": true }       
         ],
     });
 }

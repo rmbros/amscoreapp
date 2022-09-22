@@ -222,7 +222,7 @@ namespace AmsApp.Controllers
                 var patientData = (from x in context.OBLeads
                                    join e in context.VwEmployees on x.AllocatedAgentId equals e.EmployeeId into em
                                    from e in em.DefaultIfEmpty()
-                                   where x.AllocatedAgentId == empId && x.Disposition == 1 && x.AppointmentDate != null
+                                   where x.AllocatedAgentId == empId && x.Disposition == 1 && x.AppointmentDate != null && x.Status == 2
                                  && (string.IsNullOrEmpty(searchDto.Mobile) || x.Mobile == searchDto.Mobile)
                                  && (string.IsNullOrEmpty(searchDto.FromDate) || x.AppointmentDate >= Convert.ToDateTime(searchDto.FromDate))
                                  && (string.IsNullOrEmpty(searchDto.ToDate) || x.AppointmentDate < Convert.ToDateTime(searchDto.ToDate).AddDays(1))
@@ -232,9 +232,8 @@ namespace AmsApp.Controllers
                                        Name = x.Name,
                                        Mobile = x.Mobile,
                                        Agent = e.EmpNameWithId,
-                                       Status = x.PatientId == null ? string.Empty : "<span class='badge light badge-success'>Visited</span>",
-                                       AppointmentDate = x.AppointmentDate != null ? x.AppointmentDate.Value.ToString("dd/MM/yyyy hh:mm tt") : string.Empty,
-                                       Actions = "<a class='btn btn-primary shadow btn-xs sharp mr-1' href='Visit/" + x.Id + "' title='Edit'><i class='fa fa-pencil'></i></a>"
+                                       VisitDate = x.AppointmentDate != null ? x.AppointmentDate.Value.ToString("dd/MM/yyyy hh:mm tt") : string.Empty,
+                                       PatientId = x.PatientId
                                    });
 
                 if (!(string.IsNullOrEmpty(sortColumn)))

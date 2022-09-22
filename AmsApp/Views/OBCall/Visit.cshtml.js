@@ -18,7 +18,7 @@
                         $("#lblError").text(result);
                     }
                     else {
-                        var url = '/OBCall/Visits';
+                        var url = '/OBCall/Appointments';
                         window.location.href = url;
                     }
                 },
