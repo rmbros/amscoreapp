@@ -39,6 +39,7 @@ namespace AmsApp.Data
         public virtual DbSet<OBLead> OBLeads { get; set; } = null!;
         public virtual DbSet<OBAssignedLead> OBAssignedLeads { get; set; } = null!;
         public virtual DbSet<LeadCountDto> LeadCountDtos { get; set; } = null!;
+        public virtual DbSet<AppAppointment> AppAppointments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -249,6 +250,30 @@ namespace AmsApp.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.State).HasMaxLength(100);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
+            });
+
+            modelBuilder.Entity<AppAppointment>(entity =>
+            {
+                entity.HasIndex(e => e.Mobile, "AppAppointments$Mobile")
+                    .IsUnique();
+
+                entity.Property(e => e.AppointmentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Location).HasMaxLength(1000);
+
+                entity.Property(e => e.Mobile).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.PatientId).HasMaxLength(20);
 
                 entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
             });

@@ -303,5 +303,135 @@ namespace AmsApp.Controllers
             }
             return this.Ok(responceMessage);
         }
+
+        [HttpGet("AppAppointments")]
+        public IActionResult AppAppointments()
+        {
+            return View();
+        }
+
+        [HttpPost("GetAppAppointmentList")]
+        public IActionResult GetAppAppointmentList(SearchDto searchDto)
+        {
+            try
+            {
+                var empId = Extensions.GetEmployeeId(this);
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 10;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                var patientData = (from x in context.AppAppointments
+                                   join e in context.VwEmployees on x.AgentId equals e.EmployeeId into em
+                                   from e in em.DefaultIfEmpty()
+                                   where x.AgentId == empId
+                                 && (string.IsNullOrEmpty(searchDto.Mobile) || x.Mobile == searchDto.Mobile)
+                                 && (string.IsNullOrEmpty(searchDto.FromDate) || x.AppointmentDate >= Convert.ToDateTime(searchDto.FromDate))
+                                 && (string.IsNullOrEmpty(searchDto.ToDate) || x.AppointmentDate < Convert.ToDateTime(searchDto.ToDate).AddDays(1))
+                                   select new AppAppointmentListDto
+                                   {
+                                       Id = x.Id,
+                                       Name = x.Name,
+                                       Mobile = x.Mobile,
+                                       Agent = e.EmpNameWithId,
+                                       AppointmentDate = x.AppointmentDate != null ? x.AppointmentDate.Value.ToString("dd/MM/yyyy hh:mm tt") : string.Empty,
+                                       PatientId = x.PatientId
+                                   });
+
+                if (!(string.IsNullOrEmpty(sortColumn)))
+                {
+                    if (sortColumnDirection == "desc")
+                    {
+                        patientData = patientData.OrderByDescending(s => sortColumn);
+                    }
+                    else
+                    {
+                        patientData = patientData.OrderBy(s => sortColumn);
+                    }
+
+                }
+                else
+                {
+                    patientData = patientData.OrderByDescending(s => s.Name);
+                }
+
+
+                recordsTotal = patientData.Count();
+                var data = patientData.Skip(skip).Take(pageSize).ToList();
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("AppAppointment")]
+        public async Task<IActionResult> AppAppointment()
+        {
+            var data = new AppAppointment();
+            return View(data);
+        }
+
+        [HttpPost("SaveAppointment")]
+        public async Task<IActionResult> SaveAppointment(AppAppointment appointment)
+        {
+            var responceMessage = string.Empty;
+            var lead = context.OBLeads.Where(p => p.Mobile == appointment.Mobile).FirstOrDefault();
+            var userId = Extensions.GetUserId(this);
+            try
+            {
+                if (appointment == null)
+                {
+                    throw new ApplicationException("Invalid request");
+                }
+                else
+                {
+                    if (context.AppAppointments.Any(o => o.Mobile == appointment.Mobile))
+                    {
+                        throw new ApplicationException("Patient is all ready exists. Please Check the mobile number");
+                    }
+                    else
+                    {
+                        appointment.CreatedOn = DateTime.Now;
+                        appointment.CreatedBy = userId;
+                        appointment.AgentId = Extensions.GetEmployeeId(this); 
+                        context.AppAppointments.Add(appointment);
+                        await context.SaveChangesAsync();
+                    }
+                    if (lead != null)
+                    {
+                        lead.ModifiedBy = userId;
+                        lead.ModifiedOn = DateTime.Now;
+                        lead.Name = appointment.Name;
+                        lead.Age = appointment.Age;
+                        lead.Gender = appointment.Gender;
+                        lead.Address = appointment.Location;
+                        lead.MainDisease = appointment.MainDisease;
+                        lead.SubDisease = appointment.SubDisease;
+                        lead.ClinicBranch = appointment.ClinicBranch;
+                        lead.AppointmentDate = appointment.AppointmentDate;
+                        lead.Disposition = 1;
+                        lead.AllocatedAgentId = Extensions.GetEmployeeId(this);
+                        lead.LastCalledBy = Extensions.GetEmployeeId(this);
+                        lead.LastCallOn = DateTime.Now;
+                        await context.SaveChangesAsync();
+                    }
+
+                    responceMessage = "Done";
+                }
+            }
+            catch (Exception ex)
+            {
+                responceMessage = $"Error:{ex.Message}";
+            }
+            return this.Ok(responceMessage);
+        }
     }
 }
