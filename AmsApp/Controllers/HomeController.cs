@@ -32,6 +32,44 @@ namespace AmsApp.Controllers
             return View(lead);
         }
 
+        [HttpGet("MIndex")]
+        public IActionResult MIndex()
+        {
+            var empId = Extensions.GetEmployeeId(this);
+            var fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); 
+            var toDate = DateTime.Now.Date;
+
+            var spSql = $"EXECUTE dbo.GetAgentMonthCallSummary {empId}, '{fromDate.ToString("yyyy-MM-dd")}', '{toDate.ToString("yyyy-MM-dd")}'";
+
+            var data = _db.OBAgentDaySummary.FromSqlRaw(spSql)
+                                           .ToList().FirstOrDefault();
+
+            var totalTime = 0;
+            DateTime startTime = DateTime.Now.Date.AddHours(9).AddMinutes(30);
+            DateTime dayend = DateTime.Now.Date.AddHours(18).AddMinutes(30);
+            DateTime endTime = dayend.Subtract(DateTime.Now).TotalSeconds < 0 ? dayend : DateTime.Now;
+            TimeSpan span = endTime.Subtract(startTime);
+            if (fromDate == DateTime.Now.Date)
+            {
+                totalTime = Convert.ToInt32(span.TotalMinutes);
+                if (endTime.Hour >= 14) totalTime = totalTime - 30; //30min lunch break
+            }
+            else if (fromDate < DateTime.Now.Date)
+            {
+                //Today's time
+                totalTime = Convert.ToInt32(span.TotalMinutes);
+                if (endTime.Hour >= 14) totalTime = totalTime - 30; //30min lunch break
+                //TimeBefore Today
+                span = toDate.Subtract(fromDate);
+                totalTime += Convert.ToInt32(span.TotalDays) * 510;
+            }
+
+            data.TimeWasted = totalTime - data.Duration;
+
+            return View(data);
+        }
+
+
         [HttpGet("GetLookUpData")]
         public JsonResult GetLookUpData()
         {

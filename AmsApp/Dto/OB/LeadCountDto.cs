@@ -36,6 +36,24 @@ namespace AmsApp.Dto
         }
     }
 
+    public class OBAgentDaySummaryDto
+    {
+        public string Agent { get; set; } = null!;
+        public int TotalLeads { get; set; } = 0;
+        public int TotalCalls { get; set; } = 0;
+        public int Duration { get; set; } = 0;
+        public int TimeWasted { get; set; } = 0;
+        public int Appointments { get; set; } = 0;
+        public int Visited { get; set; } = 0;
+        public int Interested { get; set; }
+        public int Callback { get; set; }
+        public int NextCallDateCount { get; set; }
+        public double Speed
+        {
+            get => TotalCalls == 0 ? 0 : Math.Round(Duration / (TotalCalls * 1.0), 2);
+        }
+    }
+
     public class OBVisitListDto
     {
         public int Id { get; set; }

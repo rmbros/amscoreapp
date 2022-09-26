@@ -47,5 +47,24 @@ namespace AmsApp.Helpers
         {
             return context.SqlQuery<ListItem>("select Id, Name as Title from Countries where Status =1 Order BY Name");
         }
+        public static List<int> GetAgentIdsByLead(AMSContext context, int teamlead)
+        {
+            var data = (from c in context.CCTeams
+                        join e in context.VwEmployees on c.CCE equals e.EmployeeId
+                        where c.Status == "1" && c.CCTL == teamlead
+                        select new
+                        {
+                            Id = e.EmployeeId
+                        }).ToList();
+            var lead = context.VwEmployees.AsNoTracking().FirstOrDefault(e => e.EmployeeId == teamlead);
+            if (lead != null)
+                data.Add(new { Id = lead.EmployeeId });
+            List<int> agents = new();
+            foreach (var item in data)
+            {
+                agents.Add(item.Id);
+            }
+            return agents;
+        }
     }
 }

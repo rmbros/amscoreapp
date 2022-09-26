@@ -40,6 +40,9 @@ namespace AmsApp.Data
         public virtual DbSet<OBAssignedLead> OBAssignedLeads { get; set; } = null!;
         public virtual DbSet<LeadCountDto> LeadCountDtos { get; set; } = null!;
         public virtual DbSet<AppAppointment> AppAppointments { get; set; } = null!;
+        public virtual DbSet<VwVisit> VwVisits { get; set; } = null!;
+        public virtual DbSet<CCTeam> CCTeams { get; set; } = null!;
+        public virtual DbSet<OBAgentDaySummaryDto> OBAgentDaySummary { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -278,6 +281,40 @@ namespace AmsApp.Data
                 entity.Property(e => e.Status).HasDefaultValueSql("(N'1')");
             });
 
+            modelBuilder.Entity<VwVisit>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_Visits");
+
+                entity.Property(e => e.AppType)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AppointmentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Mobile).HasMaxLength(20);
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.PatientId).HasMaxLength(50);
+
+            });
+
+            modelBuilder.Entity<CCTeam>(entity =>
+            {
+                entity.ToTable("CCTeams");
+
+                entity.Property(e => e.CCE).HasColumnName("CCE");
+
+                entity.Property(e => e.CCTL).HasColumnName("CCTL");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("(N'1')");
+            });
+
             modelBuilder.Entity<OBAssignedLead>(entity =>
             {
                 entity.ToTable("OBAssignedLeads");
@@ -309,6 +346,11 @@ namespace AmsApp.Data
             });
 
             modelBuilder.Entity<LeadCountDto>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<OBAgentDaySummaryDto>(entity =>
             {
                 entity.HasNoKey();
             });

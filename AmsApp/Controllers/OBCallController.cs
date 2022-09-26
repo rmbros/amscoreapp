@@ -179,7 +179,12 @@ namespace AmsApp.Controllers
             DateTime fdate = Convert.ToDateTime(calldate);
             DateTime tdate = fdate.AddDays(1);
             var empId = Extensions.GetEmployeeId(this);
-            var strSql = $"select Id, Mobile, Name, Disposition, NextCallDate from OBLeads where AllocatedAgentId={empId} and PatientId is null and AppointmentDate between '{fdate.Date.ToString("yyyy-MM-dd")}' and '{tdate.Date.ToString("yyyy-MM-dd")}' ";
+            var strSql = string.Empty;
+            if(HttpContext.Session.GetString("CCTL")?.ToString() == "Yes")
+                strSql = $"select Id, Mobile, Name, Disposition, NextCallDate from OBLeads where PatientId is null and AppointmentDate between '{fdate.Date.ToString("yyyy-MM-dd")}' and '{tdate.Date.ToString("yyyy-MM-dd")}' and (AllocatedAgentId={empId} or AllocatedAgentId in (select CCE from CCTeams where CCTL={empId}))  ";
+            else
+                strSql = $"select Id, Mobile, Name, Disposition, NextCallDate from OBLeads where AllocatedAgentId={empId} and PatientId is null and AppointmentDate between '{fdate.Date.ToString("yyyy-MM-dd")}' and '{tdate.Date.ToString("yyyy-MM-dd")}' ";
+
             var data = context.SqlQuery<CallDto>(strSql);
             return View(data);
         }
@@ -218,23 +223,25 @@ namespace AmsApp.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 10;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
+                int isTeamLead = (HttpContext.Session.GetString("CCTL")?.ToString() == "Yes") ? 1 : 0;
 
-                var patientData = (from x in context.OBLeads
-                                   join e in context.VwEmployees on x.AllocatedAgentId equals e.EmployeeId into em
+                var patientData = (from x in context.VwVisits
+                                   join e in context.VwEmployees on x.AgentId equals e.EmployeeId into em
                                    from e in em.DefaultIfEmpty()
-                                   where x.AllocatedAgentId == empId && x.Disposition == 1 && x.AppointmentDate != null && x.Status == 2
-                                 && (string.IsNullOrEmpty(searchDto.Mobile) || x.Mobile == searchDto.Mobile)
-                                 && (string.IsNullOrEmpty(searchDto.FromDate) || x.AppointmentDate >= Convert.ToDateTime(searchDto.FromDate))
-                                 && (string.IsNullOrEmpty(searchDto.ToDate) || x.AppointmentDate < Convert.ToDateTime(searchDto.ToDate).AddDays(1))
-                                   select new OBVisitListDto
-                                   {
-                                       Id = x.Id,
-                                       Name = x.Name,
-                                       Mobile = x.Mobile,
-                                       Agent = e.EmpNameWithId,
-                                       VisitDate = x.AppointmentDate != null ? x.AppointmentDate.Value.ToString("dd/MM/yyyy hh:mm tt") : string.Empty,
-                                       PatientId = x.PatientId
-                                   });
+                                   where x.AppointmentDate != null
+                                    && ((isTeamLead == 0 && x.AgentId == empId) || (isTeamLead == 1 && x.TLId == empId))
+                                    && (string.IsNullOrEmpty(searchDto.Mobile) || x.Mobile == searchDto.Mobile)
+                                    && (string.IsNullOrEmpty(searchDto.FromDate) || x.AppointmentDate >= Convert.ToDateTime(searchDto.FromDate))
+                                    && (string.IsNullOrEmpty(searchDto.ToDate) || x.AppointmentDate < Convert.ToDateTime(searchDto.ToDate).AddDays(1))
+                                       select new OBVisitListDto
+                                       {
+                                           Id = x.Id,
+                                           Name = x.Name,
+                                           Mobile = x.Mobile,
+                                           Agent = e.EmpNameWithId,
+                                           VisitDate = x.AppointmentDate != null ? x.AppointmentDate.Value.ToString("dd/MM/yyyy hh:mm tt") : string.Empty,
+                                           PatientId = x.PatientId
+                                       });
 
                 if (!(string.IsNullOrEmpty(sortColumn)))
                 {
@@ -290,6 +297,7 @@ namespace AmsApp.Controllers
                     source.Status = 2;
                     context.OBLeads.Attach(source);
                     context.Entry(source).Property(x => x.PatientId).IsModified = true;
+                    context.Entry(source).Property(x => x.AppointmentDate).IsModified = true;
                     context.Entry(source).Property(x => x.ModifiedOn).IsModified = true;
                     context.Entry(source).Property(x => x.ModifiedBy).IsModified = true;
                     context.Entry(source).Property(x => x.Status).IsModified = true;
@@ -325,11 +333,17 @@ namespace AmsApp.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 10;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
+                int isTeamLead = (HttpContext.Session.GetString("CCTL")?.ToString() == "Yes") ? 1 : 0;
+                List<int> agentslist = new();
+                if (isTeamLead == 1)
+                    agentslist = LookUpTable.GetAgentIdsByLead(context, empId);
+                else
+                    agentslist.Add(empId);
 
                 var patientData = (from x in context.AppAppointments
                                    join e in context.VwEmployees on x.AgentId equals e.EmployeeId into em
                                    from e in em.DefaultIfEmpty()
-                                   where x.AgentId == empId
+                                   where agentslist.Contains(x.AgentId.Value)
                                  && (string.IsNullOrEmpty(searchDto.Mobile) || x.Mobile == searchDto.Mobile)
                                  && (string.IsNullOrEmpty(searchDto.FromDate) || x.AppointmentDate >= Convert.ToDateTime(searchDto.FromDate))
                                  && (string.IsNullOrEmpty(searchDto.ToDate) || x.AppointmentDate < Convert.ToDateTime(searchDto.ToDate).AddDays(1))
@@ -385,6 +399,7 @@ namespace AmsApp.Controllers
             var responceMessage = string.Empty;
             var lead = context.OBLeads.Where(p => p.Mobile == appointment.Mobile).FirstOrDefault();
             var userId = Extensions.GetUserId(this);
+            var empId = Extensions.GetEmployeeId(this);
             try
             {
                 if (appointment == null)
@@ -401,7 +416,7 @@ namespace AmsApp.Controllers
                     {
                         appointment.CreatedOn = DateTime.Now;
                         appointment.CreatedBy = userId;
-                        appointment.AgentId = Extensions.GetEmployeeId(this); 
+                        appointment.AgentId = empId; 
                         context.AppAppointments.Add(appointment);
                         await context.SaveChangesAsync();
                     }
@@ -418,8 +433,8 @@ namespace AmsApp.Controllers
                         lead.ClinicBranch = appointment.ClinicBranch;
                         lead.AppointmentDate = appointment.AppointmentDate;
                         lead.Disposition = 1;
-                        lead.AllocatedAgentId = Extensions.GetEmployeeId(this);
-                        lead.LastCalledBy = Extensions.GetEmployeeId(this);
+                        lead.AllocatedAgentId = empId;
+                        lead.LastCalledBy = empId;
                         lead.LastCallOn = DateTime.Now;
                         await context.SaveChangesAsync();
                     }

@@ -66,6 +66,13 @@ namespace AmsApp.Controllers
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.EmpNameWithId, "Admin"));
                 }
 
+                string[] ccTeamleads = new string[12] { "6", "70015", "70030", "70044", "70046", "70273", "70318", "70461", "70488", "70678", "70967", "71015" };
+
+                if (ccTeamleads.Contains(username))
+                    HttpContext.Session.SetString("CCTL", "Yes");
+                else
+                    HttpContext.Session.SetString("CCTL", "No");
+
                 var claimsIdentity = new ClaimsIdentity(claims, "Login");
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
