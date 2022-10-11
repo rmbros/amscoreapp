@@ -66,7 +66,8 @@ namespace AmsApp.Controllers
                     claims.Add(new Claim(Helpers.Constants.Strings.AMSClaimIdentifiers.EmpNameWithId, "Admin"));
                 }
 
-                string[] ccTeamleads = new string[13] { "6", "70015", "70030", "70044", "70046", "70273", "70318", "70461", "70488", "70678", "70967", "71015", "71429" };
+                //string[] ccTeamleads = new string[13] { "6", "70015", "70030", "70044", "70046", "70273", "70318", "70461", "70488", "70678", "70967", "71015", "71429" };
+                var ccTeamleads = _config.GetSection("GeneralSetting:CCTL").Get<List<string>>();
 
                 if (ccTeamleads.Contains(username))
                     HttpContext.Session.SetString("CCTL", "Yes");
