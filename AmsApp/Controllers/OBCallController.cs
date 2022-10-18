@@ -73,6 +73,7 @@ namespace AmsApp.Controllers
             var responceMessage = string.Empty;
             var source = context.OBLeads.Where(p => p.Id == lead.Id).FirstOrDefault();
             var userId = Extensions.GetUserId(this);
+            if(lead.StartTime < DateTime.Today) lead.StartTime = DateTime.Now;
             lead.EndTime = DateTime.Now;
             try
             {
